@@ -33,39 +33,9 @@ class _TasksListState extends State<TasksList> {
                       'Tasks',
                       style: kDefaultTitleStyle
                     ),
-                    Row(
-                      children: <Widget> [
-                        Container(
-                          margin: const EdgeInsets.only(top: 10.0, left: 5.0, bottom: 20.0),
-                          child: Text(
-                            '$doneAmount marked as done',
-                            style: kDefaultSecondaryTextStyle
-                          ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(top: 10.0, left: 15.0, bottom: 20.0),
-                          child: const Text(
-                            '●',
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 8
-                            ),
-                          ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(top: 10.0, bottom: 20.0),
-                          child: TextButton(
-                            onPressed: () {
-                              taskData.deleteCompletedTasks();
-                            },
-                            child: const Text(
-                              'Clear',
-                              style: kDefaultSecondaryTextStyle
-                            ),
-                          ),
-                        ),
-                      ]
-                    ),
+                    DynamicBar(doneAmount: doneAmount, callbackDeleteCompleted: (){
+                      taskData.deleteCompletedTasks();
+                    }),
                   ],
                 );
               }
@@ -105,6 +75,54 @@ class _TasksListState extends State<TasksList> {
           );
         },
       ),
+    );
+  }
+}
+
+class DynamicBar extends StatelessWidget {
+  const DynamicBar({
+    Key? key,
+    required this.doneAmount,
+    required this.callbackDeleteCompleted,
+  }) : super(key: key);
+
+  final int doneAmount;
+  final void Function()? callbackDeleteCompleted;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget> [
+        Text(
+          '$doneAmount marked as done',
+          style: kDefaultSecondaryTextStyle
+        ),
+        AnimatedOpacity(
+          duration: const Duration(milliseconds: 100),
+          opacity: doneAmount > 0? 1 : 0,
+          child: Row(
+            children: <Widget> [
+              Container(
+                margin: const EdgeInsets.only(left: 15.0),
+                child: const Text(
+                  '●',
+                  style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 8
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: callbackDeleteCompleted,
+                child: const Text(
+                    'Clear',
+                    style: kDefaultSecondaryTextStyle
+                ),
+              ),
+            ],
+          ),
+        )
+      ]
     );
   }
 }
