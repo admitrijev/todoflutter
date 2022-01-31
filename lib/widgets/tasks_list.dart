@@ -79,22 +79,26 @@ class _TasksListState extends State<TasksList> {
                     taskData.popTask(task);
                   }
                 },
-                child: TaskTile(
-                  taskTitle: task.name,
-                  isChecked: task.isDone,
-                  isNew: task.isNew,
-                  isLast: index + 1 == taskData.getTasksAmount(),
-                  callbackTextChanged: (String? value) {
-                    setState(() {
-                      task.setNewDescription(value);
-                      task.setAsNotNew();
-                    });
-                  },
-                  checkboxCallback: (bool? value) {
-                    setState(() {
-                      task.toggleDone();
-                    });
-                  }
+                child: Container(
+                  margin: EdgeInsets.only(
+                      bottom: index + 1 == taskData.getTasksAmount() ? 80.0 : 0
+                  ),
+                  child: TaskTile(
+                    taskTitle: task.name,
+                    isChecked: task.isDone,
+                    isNew: task.isNew,
+                    callbackTextChanged: (String? value) {
+                      setState(() {
+                        task.setNewDescription(value);
+                        task.setAsNotNew();
+                      });
+                    },
+                    checkboxCallback: (bool? value) {
+                      setState(() {
+                        task.toggleDone();
+                      });
+                    }
+                  ),
                 ),
               );
             },
