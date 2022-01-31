@@ -31,11 +31,7 @@ class _TasksListState extends State<TasksList> {
                   children: <Widget> [
                     const Text(
                       'Tasks',
-                      style: TextStyle(
-                          fontSize: 50.0,
-                          fontWeight: FontWeight.bold,
-                          color: kDefaultAccentColor,
-                      ),
+                      style: kDefaultTitleStyle
                     ),
                     Row(
                       children: <Widget> [
@@ -43,11 +39,7 @@ class _TasksListState extends State<TasksList> {
                           margin: const EdgeInsets.only(top: 10.0, left: 5.0, bottom: 20.0),
                           child: Text(
                             '$doneAmount marked as done',
-                            style: const TextStyle(
-                                fontSize: 15.0,
-                                fontWeight: FontWeight.normal,
-                                color: Colors.grey
-                            ),
+                            style: kDefaultSecondaryTextStyle
                           ),
                         ),
                         Container(
@@ -68,11 +60,7 @@ class _TasksListState extends State<TasksList> {
                             },
                             child: const Text(
                               'Clear',
-                              style: TextStyle(
-                                fontSize: 15.0,
-                                fontWeight: FontWeight.normal,
-                                color: Colors.grey
-                              ),
+                              style: kDefaultSecondaryTextStyle
                             ),
                           ),
                         ),
@@ -87,10 +75,8 @@ class _TasksListState extends State<TasksList> {
               Task task = taskData.tasks[index];
               return Focus(
                 onFocusChange: (hasFocus) {
-                  if(!hasFocus) {
-                    if(task.name == '') {
-                      taskData.popTask(task);
-                    }
+                  if(!hasFocus && task.name == '') {
+                    taskData.popTask(task);
                   }
                 },
                 child: TaskTile(
