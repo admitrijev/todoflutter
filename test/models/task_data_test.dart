@@ -49,4 +49,14 @@ void main() {
 
     expect(taskData.getDoneAmount(), 2);
   });
+
+  test('Function must delete tasks without description', () {
+    final taskData = TaskData();
+    taskData.addTask(Task(name: ''));
+    taskData.addTask(Task(name: ''));
+    taskData.addTask(Task(name: 'test'));
+
+    taskData.popEmptyTasks();
+    expect(taskData.getTasksAmount(), 1);
+  });
 }

@@ -53,6 +53,7 @@ class _TasksScreenState extends State<TasksScreen> {
                     margin: const EdgeInsets.only(top: 10.0, left: 10.0),
                     child: TextButton(
                         onPressed: () {
+                          Provider.of<TaskData>(context, listen: false).popEmptyTasks();
                           Provider.of<TaskData>(context, listen: false).addTask();
                         },
                         child: const Text(

@@ -6,10 +6,11 @@ class TaskTile extends StatelessWidget {
   final String taskTitle;
   final bool isChecked;
   final bool isNew;
+  final bool isLast;
   final Function(bool?) checkboxCallback;
   final Function(String?) callbackTextChanged;
 
-  const TaskTile({Key? key, required this.taskTitle, required this.isChecked, required this.isNew, required this.checkboxCallback, required this.callbackTextChanged}) : super(key: key);
+  const TaskTile({Key? key, required this.taskTitle, required this.isChecked, required this.isLast, required this.isNew, required this.checkboxCallback, required this.callbackTextChanged}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class TaskTile extends StatelessWidget {
         contentPadding: const EdgeInsets.all(0.0),
         horizontalTitleGap: 0,
         leading: TaskTileCheckbox(isChecked: isChecked, checkboxCallback: checkboxCallback),
-        title: TaskTileBody(callbackTextChanged: callbackTextChanged, isNew: isNew, taskTitle: taskTitle, isChecked: isChecked),
+        title: TaskTileBody(callbackTextChanged: callbackTextChanged, isNew: isNew, isLast: isLast, taskTitle: taskTitle, isChecked: isChecked),
       ),
     );
   }
@@ -30,18 +31,27 @@ class TaskTileBody extends StatelessWidget {
     Key? key,
     required this.callbackTextChanged,
     required this.isNew,
+    required this.isLast,
     required this.taskTitle,
     required this.isChecked,
   }) : super(key: key);
 
   final Function(String? p1) callbackTextChanged;
   final bool isNew;
+  final bool isLast;
   final String taskTitle;
   final bool isChecked;
 
   @override
   Widget build(BuildContext context) {
+    final textEditingController = TextEditingController();
+    textEditingController.text = taskTitle;
+    textEditingController.selection = TextSelection.fromPosition(TextPosition(offset: textEditingController.text.length));
+
     return Container(
+      margin: EdgeInsets.only(
+        bottom: isLast ? 80.0 : 0
+      ),
       decoration: const BoxDecoration(
         border: Border(
           bottom: BorderSide(
@@ -51,9 +61,9 @@ class TaskTileBody extends StatelessWidget {
         ),
       ),
       child: TextField(
-        onSubmitted: callbackTextChanged,
+        onChanged: callbackTextChanged,
         autofocus: isNew,
-        controller: TextEditingController(text: taskTitle),
+        controller: textEditingController,
         maxLines: null,
         keyboardType: TextInputType.text,
         decoration: const InputDecoration(

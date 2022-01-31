@@ -39,6 +39,18 @@ class TaskData extends ChangeNotifier {
     notifyListeners();
   }
 
+  void popEmptyTasks() {
+    var toRemove = <Task>[];
+    for (var task in _tasks) {
+      if (task.name == '') {
+        toRemove.add(task);
+      }
+    }
+
+    popTasksArray(toRemove);
+    notifyListeners();
+  }
+
   Task createTask() {
     return Task(name: '', isNew: true);
   }
@@ -46,6 +58,12 @@ class TaskData extends ChangeNotifier {
   void addTask([Task? taskToAdd]) {
     _tasks.add(taskToAdd?? createTask());
     notifyListeners();
+  }
+
+  void popTasksArray(List<Task> arrayToDelete) {
+    for (var task in arrayToDelete) {
+      popTask(task);
+    }
   }
 
   void popTask(taskToRemove) {

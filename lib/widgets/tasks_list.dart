@@ -83,6 +83,7 @@ class _TasksListState extends State<TasksList> {
                   taskTitle: task.name,
                   isChecked: task.isDone,
                   isNew: task.isNew,
+                  isLast: index + 1 == taskData.getTasksAmount(),
                   callbackTextChanged: (String? value) {
                     setState(() {
                       task.setNewDescription(value);
