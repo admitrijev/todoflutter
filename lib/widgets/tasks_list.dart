@@ -43,10 +43,16 @@ class _TasksListState extends State<TasksList> {
               index -= 1;
 
               Task task = taskData.tasks[index];
+              final textEditingController = TextEditingController();
+              textEditingController.text = task.name;
               return Focus(
                 onFocusChange: (hasFocus) {
-                  if(!hasFocus && task.name == '') {
-                    taskData.popTask(task);
+                  if(!hasFocus) {
+                    if (textEditingController.text == '') {
+                      taskData.popTask(task);
+                    } else {
+                      task.name = textEditingController.text;
+                    }
                   }
                 },
                 child: Container(
@@ -54,7 +60,7 @@ class _TasksListState extends State<TasksList> {
                       bottom: index + 1 == taskData.getTasksAmount() ? 80.0 : 0
                   ),
                   child: TaskTile(
-                    taskTitle: task.name,
+                    textEditingController: textEditingController,
                     isChecked: task.isDone,
                     isNew: task.isNew,
                     callbackTextChanged: (String? value) {
