@@ -3,7 +3,7 @@ import 'package:todoapp/models/task.dart';
 
 void main() {
   Task createTestTask() {
-    return Task(name: 'TaskName', isNew: true, isDone: false);
+    return Task(description: 'TaskName', isNew: true, isDone: false);
   }
 
   test('New description have to be set', () {
@@ -11,7 +11,7 @@ void main() {
     const String newDescription = 'New Description';
 
     task.setNewDescription(newDescription);
-    expect(task.name, newDescription);
+    expect(task.description, newDescription);
   });
 
   test('Must set isNew as false', () {

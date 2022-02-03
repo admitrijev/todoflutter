@@ -1,13 +1,13 @@
 class Task {
 
-  String name;
+  String description;
   bool isDone;
   bool isNew;
 
-  Task({required this.name, this.isNew = false, this.isDone = false});
+  Task({required this.description, this.isNew = false, this.isDone = false});
 
   void setNewDescription(value) {
-    name = value;
+    description = value;
   }
 
   void setAsNotNew() {

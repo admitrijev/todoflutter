@@ -39,19 +39,20 @@ class _TasksListState extends State<TasksList> {
                   ],
                 );
               }
+
               //Adds an extra index to render the title
               index -= 1;
 
               Task task = taskData.tasks[index];
               final textEditingController = TextEditingController();
-              textEditingController.text = task.name;
+              textEditingController.text = task.description;
               return Focus(
                 onFocusChange: (hasFocus) {
                   if(!hasFocus) {
                     if (textEditingController.text == '') {
                       taskData.popTask(task);
                     } else {
-                      task.name = textEditingController.text;
+                      task.description = textEditingController.text;
                     }
                   }
                 },

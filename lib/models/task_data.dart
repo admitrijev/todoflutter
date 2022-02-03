@@ -42,7 +42,7 @@ class TaskData extends ChangeNotifier {
   void popEmptyTasks() {
     var toRemove = <Task>[];
     for (var task in _tasks) {
-      if (task.name == '') {
+      if (task.description == '') {
         toRemove.add(task);
       }
     }
@@ -52,7 +52,7 @@ class TaskData extends ChangeNotifier {
   }
 
   Task createTask() {
-    return Task(name: '', isNew: true);
+    return Task(description: '', isNew: true);
   }
 
   void addTask([Task? taskToAdd]) {

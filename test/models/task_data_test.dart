@@ -23,7 +23,7 @@ void main() {
 
   test('Function must pop the specific task', () {
     final taskData = TaskData();
-    Task taskToDelete = Task(name: 'test', isDone: true);
+    Task taskToDelete = Task(description: 'test', isDone: true);
     taskData.addTask(taskToDelete);
     taskData.addTask();
 
@@ -33,9 +33,9 @@ void main() {
 
   test('Function must delete all tasks marked as done', () {
     final taskData = TaskData();
-    taskData.addTask(Task(name: 'test', isDone: true));
-    taskData.addTask(Task(name: 'test', isDone: false));
-    taskData.addTask(Task(name: 'test', isDone: true));
+    taskData.addTask(Task(description: 'test', isDone: true));
+    taskData.addTask(Task(description: 'test', isDone: false));
+    taskData.addTask(Task(description: 'test', isDone: true));
 
     taskData.deleteCompletedTasks();
     expect(taskData.getTasksAmount(), 1);
@@ -43,18 +43,18 @@ void main() {
 
   test('Function must return amount of tasks marked as done', () {
     final taskData = TaskData();
-    taskData.addTask(Task(name: 'test', isDone: true));
-    taskData.addTask(Task(name: 'test', isDone: false));
-    taskData.addTask(Task(name: 'test', isDone: true));
+    taskData.addTask(Task(description: 'test', isDone: true));
+    taskData.addTask(Task(description: 'test', isDone: false));
+    taskData.addTask(Task(description: 'test', isDone: true));
 
     expect(taskData.getDoneAmount(), 2);
   });
 
   test('Function must delete tasks without description', () {
     final taskData = TaskData();
-    taskData.addTask(Task(name: ''));
-    taskData.addTask(Task(name: ''));
-    taskData.addTask(Task(name: 'test'));
+    taskData.addTask(Task(description: ''));
+    taskData.addTask(Task(description: ''));
+    taskData.addTask(Task(description: 'test'));
 
     taskData.popEmptyTasks();
     expect(taskData.getTasksAmount(), 1);
